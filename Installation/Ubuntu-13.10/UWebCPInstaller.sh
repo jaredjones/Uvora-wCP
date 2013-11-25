@@ -39,6 +39,10 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
 
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
+apt-get -y remove mariadb-server
+apt-get -y purge mariadb* && apt-get -y autoremove
+apt-get autoclean
+rm -rf /etc/mysql
 
  
 echo ""
