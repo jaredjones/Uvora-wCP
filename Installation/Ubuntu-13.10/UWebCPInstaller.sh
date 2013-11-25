@@ -144,8 +144,8 @@ while read line; do
   fi
 done < /usr/local/apache2/conf/httpd.conf
  
-perl -pi -e 's{DocumentRoot "/usr/local/apache2/htdocs}{DocumentRoot "/var/www}g' httpd.conf
-perl -pi -e 's{<Directory "/usr/local/apache2/htdocs}{<Directory "/var/www}g' httpd.conf
+perl -pi -e 's{DocumentRoot "/usr/local/apache2/htdocs}{DocumentRoot "/var/www/UWebCP/public_html}g' httpd.conf
+perl -pi -e 's{<Directory "/usr/local/apache2/htdocs}{<Directory "/var/www/UWebCP/public_html}g' httpd.conf
 perl -pi -e 's{Options Indexes FollowSymLinks}{Options Indexes FollowSymLinks ExecCGI}g' httpd.conf
 perl -pi -e 's{User daemon}{User ucp-apache-usr}g' httpd.conf
 perl -pi -e 's{Group daemon}{Group ucp-apache}g' httpd.conf
@@ -215,8 +215,66 @@ apt-get update
 echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
 echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
 apt-get -y install mariadb-server
- 
-echo $MARIADB_PASS>/dev/tty
+echo "Installation Finished.">/dev/tty 
+echo "">/dev/tty
+
+echo "Initalizing UvoraWebCP File Structure">/dev/tty
+rm -rf /etc/UWebCP
+mkdir /etc/UWebCP
+mkdir /etc/UWebCP/panel
+mkdir /var/www/UWebCP
+mkdir /var/www/UWebCP/logs
+mkdir /var/www/UWebCP/public_html
+chown -R ucp-apache-usr:ucp-apache /var/www
+find /var/www -type d | xargs chmod 750
+find /var/www -type f | xargs chmod 740
+
+echo "Jobs Done.">/dev/tty
+
+echo "Fetching UWebCP from github to /opt/UWebCP">/dev/tty
+rm -rf /opt/UWebCP
+mkdir /opt/UWebCP
+cd /opt/UWebCP
+
+git clone https://github.com/theoatman/Uvora-wCP.git
+cd Uvora-wCP
+git checkout master
+mkdir ../UWebCPExport
+git checkout-index -a -f --prefix=../UWebCPExport/
+cd ../UWebCPExport
+cp -fr * /etc/UWebCP/panel
+echo "UWeb files have been fetched.">/dev/tty
+echo "">/dev/tty
+echo "Compiling USudo">/dev/tty
+cc -o /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo.c
+chown root /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
+chmod +s /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
+echo "Done.">/dev/tty
+
+echo "Installing and Configuring ProFTPD:">/dev/tty
+
+echo proftpd-basic shared/proftpd/inetd_or_standalone select standalone | debconf-set-selections
+apt-get -y install proftpd-mod-mysql 
+mysql -uroot -p$MARIADB_PASS < /etc/UWebCP/panel/Installation/ProFTPD/uwebcp_proftpd.sql
+groupadd -g 2001 ucp-ftgroupadd -g 2001 ucp-ftpgroup
+useradd -u 2001 -s /bin/false -d /bin/null -c "UWebCP ProFTPD user" -g ucp-ftpgroup ucp-ftpuser
+SQL_LINE=`grep "SQLConnectInfo" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf -n | cut -d ":" -f1`
+SQL_LINE_NO=`expr $SQL_LINE + 1`
+sed -i "$SQL_LINE s/^/#/" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
+sed -i "$SQL_LINE_NO i SQLConnectInfo uwebcp_proftpd@localhost root $MARIADB_PASS" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
+mv /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bk
+touch /etc/proftpd/proftpd.conf
+echo "include /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf" >> /etc/proftpd/proftpd.conf
+mkdir /var/www/UWebCP/logs/proftpd
+chmod -R 644 /var/www/UWebCP/logs/proftpd
+
+echo "Done.">/dev/tty
+
+
+#echo $MARIADB_PASS>/dev/tty
+
+
+
  
 #exec 1>/dev/tty
  
