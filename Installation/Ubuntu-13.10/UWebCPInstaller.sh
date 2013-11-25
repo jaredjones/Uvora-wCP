@@ -36,6 +36,10 @@ echo "if I update your application repository and install some"
 echo "updates. This shouldn't take long... SIT TIGHT! :)"
  
 #exec &>$INSTALL_LOG
+
+apt-get -y remove proftpd-mod-mysql
+rm -rf /etc/proftpd
+
  
 echo ""
 echo -ne "\nUpdating Aptitude Repos: ">/dev/tty
@@ -93,10 +97,10 @@ rm -f /etc/rc*/*apache2
 rm -rf /usr/local/apache2
 rm -rf /var/www
  
-echo -n "Downloading Apache (2.4.6):">/dev/tty
-wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.6.tar.gz
-tar xvf httpd-2.4.6.tar.gz
-cd httpd-2.4.6/
+echo -n "Downloading Apache (2.4.7):">/dev/tty
+wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.7.tar.gz
+tar xvf httpd-2.4.7.tar.gz
+cd httpd-2.4.7/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
 ./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-cgi --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
@@ -188,13 +192,8 @@ unzip UWebCP-PHP-5.5.6-2.zip
 dpkg -i php_5.5.6.2-2_amd64.deb
 echo "">/dev/tty
  
-cp php.ini-production /usr/local/apache2/conf/php.ini-production
- 
- 
- 
- 
- 
- 
+cp php.ini-production /usr/local/apache2/conf/php.ini-production 
+
 cd /usr/local/apache2/conf
 perl -pi -e 's{LoadModule php5_module}{#LoadModule php5_module}g' httpd.conf
  
