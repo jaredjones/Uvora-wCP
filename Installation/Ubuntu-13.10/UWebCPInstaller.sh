@@ -102,7 +102,7 @@ wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.7.tar.gz
 tar xvf httpd-2.4.7.tar.gz
 cd httpd-2.4.7/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
-./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-cgi --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
+./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
 make -j8
 echo -ne "\nInstalling Apache:">/dev/tty
