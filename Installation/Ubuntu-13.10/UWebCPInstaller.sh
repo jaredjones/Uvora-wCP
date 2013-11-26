@@ -191,9 +191,10 @@ echo "">/dev/tty
 echo -n "Downloading/Installing PHP (5.5.6):">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget https://dl.dropboxusercontent.com/s/rlo66nvux12n2p7/UWebCP-PHP-5.5.6-2.zip
-unzip UWebCP-PHP-5.5.6-2.zip
-dpkg -i php_5.5.6.2-2_amd64.deb
+wget https://dl.dropboxusercontent.com/s/0eb3rgjh574ykue/php5.5.6-4.zip
+unzip php5.5.6-4.zip
+dpkg -r php
+dpkg -i php_5.5.6-4_amd64.deb
 echo "">/dev/tty
  
 cp php.ini-production /usr/local/apache2/conf/php.ini-production 
