@@ -1,3 +1,4 @@
+#!/bin/bash
 
 if [ "$(whoami)" != "root" ]; then
     echo "Sorry, you are not root."
@@ -39,7 +40,10 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
 
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
-
+apt-get -y remove mariadb-server
+apt-get -y purge mariadb* && apt-get -y autoremove
+apt-get autoclean
+rm -rf /etc/mysql
  
 echo ""
 echo -ne "\nUpdating Aptitude Repos: ">/dev/tty
@@ -189,6 +193,7 @@ mkdir -p PHPFILES
 cd PHPFILES
 wget https://dl.dropboxusercontent.com/s/45dvr5et8zde10l/php_5.5.9_amd64.zip
 unzip php_5.5.9-1_amd64.zip
+dpkg -r php
 dpkg -i php_5.5.9_amd64.deb
 echo "">/dev/tty
  
