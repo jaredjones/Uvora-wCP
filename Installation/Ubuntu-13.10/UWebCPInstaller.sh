@@ -124,7 +124,9 @@ groupadd ucp-apache
 useradd -g ucp-apache ucp-apache-usr
 echo "">/dev/tty
 echo -n "Restructuring Apache:">/dev/tty
- 
+
+sed -i '1,100000d' /usr/local/apache2/conf/extra/httpd-vhosts.conf
+
 chown -R root:ucp-apache /usr/local/apache2
  
 find /usr/local/apache2 -type d | xargs chmod 771
@@ -192,9 +194,9 @@ echo -n "Downloading/Installing PHP (5.5.9):">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
 wget https://dl.dropboxusercontent.com/s/45dvr5et8zde10l/php_5.5.9_amd64.zip
-unzip php_5.5.9-1_amd64.zip
+unzip php_5.5.9_amd64.zip
 dpkg -r php
-dpkg -i php_5.5.9_amd64.deb
+dpkg -i php_5.5.9-1_amd64.deb
 echo "">/dev/tty
  
 cp php.ini-production /usr/local/apache2/conf/php.ini-production 
