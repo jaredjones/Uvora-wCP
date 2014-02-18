@@ -1,4 +1,4 @@
-#!/bin/bash
+
 if [ "$(whoami)" != "root" ]; then
     echo "Sorry, you are not root."
     exit 1
@@ -39,10 +39,6 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
 
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
-apt-get -y remove mariadb-server
-apt-get -y purge mariadb* && apt-get -y autoremove
-apt-get autoclean
-rm -rf /etc/mysql
 
  
 echo ""
@@ -188,13 +184,12 @@ make install
 cd ~/UvoraWCPTMP
  
 echo "">/dev/tty
-echo -n "Downloading/Installing PHP (5.5.6):">/dev/tty
+echo -n "Downloading/Installing PHP (5.5.9):">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget https://dl.dropboxusercontent.com/s/0eb3rgjh574ykue/php5.5.6-4.zip
-unzip php5.5.6-4.zip
-dpkg -r php
-dpkg -i php_5.5.6-4_amd64.deb
+wget https://dl.dropboxusercontent.com/s/45dvr5et8zde10l/php_5.5.9_amd64.zip
+unzip php_5.5.9-1_amd64.zip
+dpkg -i php_5.5.9_amd64.deb
 echo "">/dev/tty
  
 cp php.ini-production /usr/local/apache2/conf/php.ini-production 
@@ -241,7 +236,7 @@ rm -rf /opt/UWebCP
 mkdir /opt/UWebCP
 cd /opt/UWebCP
 
-git clone https://github.com/theoatman/Uvora-wCP.git
+git clone https://github.com/jaredjones/Uvora-wCP.git
 cd Uvora-wCP
 git checkout master
 mkdir ../UWebCPExport
@@ -261,7 +256,7 @@ echo "Installing and Configuring ProFTPD:">/dev/tty
 echo proftpd-basic shared/proftpd/inetd_or_standalone select standalone | debconf-set-selections
 apt-get -y install proftpd-mod-mysql 
 mysql -uroot -p$MARIADB_PASS < /etc/UWebCP/panel/Installation/ProFTPD/uwebcp_proftpd.sql
-groupadd -g 2001 ucp-ftgroupadd -g 2001 ucp-ftpgroup
+groupadd -g 2001 ucp-ftpgroup
 useradd -u 2001 -s /bin/false -d /bin/null -c "UWebCP ProFTPD user" -g ucp-ftpgroup ucp-ftpuser
 SQL_LINE=`grep "SQLConnectInfo" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf -n | cut -d ":" -f1`
 SQL_LINE_NO=`expr $SQL_LINE + 1`
