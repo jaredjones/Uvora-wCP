@@ -101,10 +101,10 @@ rm -f /etc/rc*/*apache2
 rm -rf /usr/local/apache2
 rm -rf /var/www
  
-echo -n "Downloading Apache (2.4.7):">/dev/tty
+echo -n "Downloading Apache (2.4.9):">/dev/tty
 wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.7.tar.gz
-tar xvf httpd-2.4.7.tar.gz
-cd httpd-2.4.7/
+tar xvf httpd-2.4.9.tar.gz
+cd httpd-2.4.9/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
 ./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
