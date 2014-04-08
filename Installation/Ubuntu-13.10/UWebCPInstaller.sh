@@ -102,7 +102,7 @@ rm -rf /usr/local/apache2
 rm -rf /var/www
  
 echo -n "Downloading Apache (2.4.9):">/dev/tty
-wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.7.tar.gz
+wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.9.tar.gz
 tar xvf httpd-2.4.9.tar.gz
 cd httpd-2.4.9/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
