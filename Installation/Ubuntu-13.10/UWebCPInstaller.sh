@@ -41,6 +41,9 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
 apt-get -y remove mariadb-server
+apt-get -y remove apache
+apt-get -y remove apache2
+apt-get -y purge mysql* && apt-get -y autoremove
 apt-get -y purge mariadb* && apt-get -y autoremove
 apt-get autoclean
 rm -rf /etc/mysql
@@ -97,7 +100,9 @@ rm -f /etc/init.d/apache
 rm -f /etc/init.d/apachectl
 rm -f /etc/init.d/httpd
 rm -f /etc/rc*/*apache2
- 
+rm -f /etc/rc*/*apache
+rm -f /etc/rc*/*apachectl
+
 rm -rf /usr/local/apache2
 rm -rf /var/www
  
@@ -278,7 +283,7 @@ chmod -R 644 /var/www/UWebCP/logs/proftpd
 echo "Done.">/dev/tty
 
 
-#echo $MARIADB_PASS>/dev/tty
+echo $MARIADB_PASS>/dev/tty
 
 
 
