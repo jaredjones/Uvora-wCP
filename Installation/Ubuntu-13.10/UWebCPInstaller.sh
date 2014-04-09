@@ -263,22 +263,23 @@ chown root /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
 chmod +s /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
 echo "Done.">/dev/tty
 
-echo "Installing and Configuring ProFTPD:">/dev/tty
-
-echo proftpd-basic shared/proftpd/inetd_or_standalone select standalone | debconf-set-selections
-apt-get -y install proftpd-mod-mysql 
-mysql -uroot -p$MARIADB_PASS < /etc/UWebCP/panel/Installation/ProFTPD/uwebcp_proftpd.sql
-groupadd -g 2001 ucp-ftpgroup
-useradd -u 2001 -s /bin/false -d /bin/null -c "UWebCP ProFTPD user" -g ucp-ftpgroup ucp-ftpuser
-SQL_LINE=`grep "SQLConnectInfo" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf -n | cut -d ":" -f1`
-SQL_LINE_NO=`expr $SQL_LINE + 1`
-sed -i "$SQL_LINE s/^/#/" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
-sed -i "$SQL_LINE_NO i SQLConnectInfo uwebcp_proftpd@localhost root $MARIADB_PASS" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
-mv /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bk
-touch /etc/proftpd/proftpd.conf
-echo "include /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf" >> /etc/proftpd/proftpd.conf
-mkdir /var/www/UWebCP/logs/proftpd
-chmod -R 644 /var/www/UWebCP/logs/proftpd
+#NOTREADY
+#echo "Installing and Configuring ProFTPD:">/dev/tty
+#
+#echo proftpd-basic shared/proftpd/inetd_or_standalone select standalone | debconf-set-selections
+#apt-get -y install proftpd-mod-mysql 
+#mysql -uroot -p$MARIADB_PASS < /etc/UWebCP/panel/Installation/ProFTPD/uwebcp_proftpd.sql
+#groupadd -g 2001 ucp-ftpgroup
+#useradd -u 2001 -s /bin/false -d /bin/null -c "UWebCP ProFTPD user" -g ucp-ftpgroup ucp-ftpuser
+#SQL_LINE=`grep "SQLConnectInfo" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf -n | cut -d ":" -f1`
+#SQL_LINE_NO=`expr $SQL_LINE + 1`
+#sed -i "$SQL_LINE s/^/#/" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
+#sed -i "$SQL_LINE_NO i SQLConnectInfo uwebcp_proftpd@localhost root $MARIADB_PASS" /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf
+#mv /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bk
+#touch /etc/proftpd/proftpd.conf
+#echo "include /etc/UWebCP/panel/Installation/ProFTPD/proftpd-mysql.conf" >> /etc/proftpd/proftpd.conf
+#mkdir /var/www/UWebCP/logs/proftpd
+#chmod -R 644 /var/www/UWebCP/logs/proftpd
 
 echo "Done.">/dev/tty
 
