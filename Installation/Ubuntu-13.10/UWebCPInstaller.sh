@@ -56,7 +56,7 @@ apt-get -y update
 echo -ne "\nUpgrading Aptitude Apps: ">/dev/tty
 apt-get -y upgrade
 echo -ne "\nBuilding Essentials and Requirements: ">/dev/tty
-apt-get -y install build-essential libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl
+apt-get -y install build-essential libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs
  
  
  
