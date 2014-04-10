@@ -223,8 +223,8 @@ genpasswd() {
  
 MARIADB_PASS=$(genpasswd 20)
  
-apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.0/ubuntu saucy main'
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+add-apt-repository 'deb http://mirrors.syringanetworks.net/mariadb/repo/10.0/ubuntu saucy main'
 apt-get update
 echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
 echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
