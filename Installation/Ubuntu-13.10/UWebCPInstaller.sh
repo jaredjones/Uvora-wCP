@@ -38,6 +38,8 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
  
 #exec &>$INSTALL_LOG
 
+locale-gen en_US.UTF-8
+
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
 apt-get -y remove mariadb-server
