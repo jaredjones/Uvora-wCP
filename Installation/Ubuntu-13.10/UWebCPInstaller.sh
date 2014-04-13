@@ -254,7 +254,7 @@ add-apt-repository 'deb http://mirrors.syringanetworks.net/mariadb/repo/10.0/ubu
 apt-get update
 echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
 echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
-apt-get -y install mariadb-server
+apt-get -y install mariadb-server libmariadbclient-dev
 echo "Installation Finished.">/dev/tty 
 echo "">/dev/tty
 
