@@ -47,6 +47,7 @@ apt-get -y remove apache
 apt-get -y remove apache2
 apt-get -y purge mysql* && apt-get -y autoremove
 apt-get -y purge mariadb* && apt-get -y autoremove
+apt-get -y purge sendmail && apt-get -y autoremove
 apt-get autoclean
 rm -rf /etc/mysql
 
@@ -113,7 +114,7 @@ wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.9.tar.gz
 tar xvf httpd-2.4.9.tar.gz
 cd httpd-2.4.9/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
-./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
+./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --with-mpm=prefork --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
 make -j8
 echo -ne "\nInstalling Apache:">/dev/tty
@@ -150,12 +151,12 @@ find /var/www -type f | xargs chmod 740
  
 cd /usr/local/apache2/conf
  
-while read line; do
-  echo "$line"
-  if [[ "$line" = "#ServerName www.example.com:80" ]]; then
-      echo -e "\nMaxRequestsPerProcess 500\nAddHandler fcgid-script .php5 .php4 .php .php3 .php2 .phtml\nFCGIWrapper /usr/local/php/bin/php-cgi .php5\nFCGIWrapper /usr/local/php/bin/php-cgi .php4\nFCGIWrapper /usr/local/php/bin/php-cgi .php\nFCGIWrapper /usr/local/php/bin/php-cgi .php3\nFCGIWrapper /usr/local/php/bin/php-cgi .php2\nFCGIWrapper /usr/local/php/bin/php-cgi .phtml\n\nAddHandler cgi-script .cgi .pl\n\nServerSignature On"
-  fi
-done < /usr/local/apache2/conf/httpd.conf
+#while read line; do
+ # echo "$line"
+  #if [[ "$line" = "#ServerName www.example.com:80" ]]; then
+   #   echo -e "\nMaxRequestsPerProcess 500\nAddHandler fcgid-script .php5 .php4 .php .php3 .php2 .phtml\nFCGIWrapper /usr/local/php/bin/php-cgi .php5\nFCGIWrapper /usr/local/php/bin/php-cgi .php4\nFCGIWrapper /usr/local/php/bin/php-cgi .php\nFCGIWrapper /usr/local/php/bin/php-cgi .php3\nFCGIWrapper /usr/local/php/bin/php-cgi .php2\nFCGIWrapper /usr/local/php/bin/php-cgi .phtml\n\nAddHandler cgi-script .cgi .pl\n\nServerSignature On"
+  #fi
+#done < /usr/local/apache2/conf/httpd.conf
  
 perl -pi -e 's{DocumentRoot "/usr/local/apache2/htdocs}{DocumentRoot "/var/www/UWebCP/public_html}g' httpd.conf
 perl -pi -e 's{<Directory "/usr/local/apache2/htdocs}{<Directory "/var/www/UWebCP/public_html}g' httpd.conf
@@ -167,7 +168,7 @@ perl -pi -e 's/#LoadModule rewrite_module/LoadModule rewrite_module/g' httpd.con
 perl -pi -e 's/#LoadModule userdir_module/LoadModule userdir_module/g' httpd.conf
 perl -pi -e 's/#LoadModule ssl_module/LoadModule ssl_module/g' httpd.conf
 perl -pi -e 's/#LoadModule autoindex_module/LoadModule autoindex_module/g' httpd.conf
-perl -pi -e 's/#LoadModule suexec_module/LoadModule suexec_module/g' httpd.conf
+#perl -pi -e 's/#LoadModule suexec_module/LoadModule suexec_module/g' httpd.conf
 perl -pi -e 's/#LoadModule actions_module/LoadModule actions_module/g' httpd.conf
 perl -pi -e 's{#Include conf/extra/httpd-userdir.conf}{Include conf/extra/httpd-userdir.conf}g' httpd.conf
 perl -pi -e 's{#Include conf/extra/httpd-vhosts.conf}{Include conf/extra/httpd-vhosts.conf}s' httpd.conf
@@ -186,30 +187,50 @@ chgrp ucp-apache /usr/local/apache2/bin/suexec
 chmod 4750 /usr/local/apache2/bin/suexec
 echo "">/dev/tty
  
+#cd ~/UvoraWCPTMP
+#echo -n "Installing FCGID:">/dev/tty
+#wget http://mirrors.sonic.net/apache//httpd/mod_fcgid/mod_fcgid-2.3.9.tar.gz
+#tar -zxf mod_fcgid-2.3.9.tar.gz
+#cd mod_fcgid-2.3.9
+#APXS=/usr/local/apache2/bin/apxs ./configure.apxs
+#make -j8
+#make install
 cd ~/UvoraWCPTMP
-echo -n "Installing FCGID:">/dev/tty
-wget http://mirrors.sonic.net/apache//httpd/mod_fcgid/mod_fcgid-2.3.9.tar.gz
-tar -zxf mod_fcgid-2.3.9.tar.gz
-cd mod_fcgid-2.3.9
-APXS=/usr/local/apache2/bin/apxs ./configure.apxs
-make -j8
-make install
-cd ~/UvoraWCPTMP
- 
 echo "">/dev/tty
-echo -n "Downloading/Installing PHP (5.5.9):">/dev/tty
+echo -n "Downloading MPM-ITK:">/dev/tty
+wget http://mpm-itk.sesse.net/mpm-itk-2.4.7-02.tar.gz
+tar -xzf mpm-itk-2.4.7-02.tar.gz
+cd mpm-itk-2.4.7-02
+./configure --with-apxs=/usr/local/apache2/bin/apxs
+make
+make install
+echo "">/dev/tty
+
+
+mkdir /usr/lib64
+cp /usr/lib/libc-client.a /usr/lib64/
+cp /usr/lib/libc-client.so /usr/lib64/
+cp /usr/lib/libc-client.so.2007e /usr/lib64/
+
+cd ~/UvoraWCPTMP
+
+echo "">/dev/tty
+echo -n "Downloading/Installing PHP (5.5.11):">/dev/tty
+echo -n "This is going to take a LONG LONG time:">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget https://dl.dropboxusercontent.com/s/45dvr5et8zde10l/php_5.5.9_amd64.zip
-unzip php_5.5.9_amd64.zip
-dpkg -r php
-dpkg -i php_5.5.9-1_amd64.deb
+wget http://us1.php.net/get/php-5.5.11.tar.gz/from/this/mirror
+tar -xzf mirror
+cd php-5.5.11
+./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
+make -j8
+make install
 echo "">/dev/tty
  
 cp php.ini-production /usr/local/apache2/conf/php.ini-production 
 
 cd /usr/local/apache2/conf
-perl -pi -e 's{LoadModule php5_module}{#LoadModule php5_module}g' httpd.conf
+#perl -pi -e 's{LoadModule php5_module}{#LoadModule php5_module}g' httpd.conf
  
 cd ~/
 echo "PHP Installation Finished.">/dev/tty
@@ -224,7 +245,7 @@ genpasswd() {
 MARIADB_PASS=$(genpasswd 20)
  
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-add-apt-repository 'deb http://mirrors.syringanetworks.net/mariadb/repo/10.0/ubuntu saucy main'
+add-apt-repository 'deb http://mirrors.syringanetworks.net/mariadb/repo/10.0/ubuntu trusty main'
 apt-get update
 echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
 echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
