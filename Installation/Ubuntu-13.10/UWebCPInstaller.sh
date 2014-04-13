@@ -40,14 +40,20 @@ echo "updates. This shouldn't take long... SIT TIGHT! :)"
 
 locale-gen en_US.UTF-8
 
+/etc/init.d/sendmail stop
+
 apt-get -y remove proftpd-mod-mysql
 rm -rf /etc/proftpd
 apt-get -y remove mariadb-server
 apt-get -y remove apache
 apt-get -y remove apache2
+apt-get -y remove sendmail sendmail-bin procmail
+
 apt-get -y purge mysql* && apt-get -y autoremove
 apt-get -y purge mariadb* && apt-get -y autoremove
 apt-get -y purge sendmail && apt-get -y autoremove
+apt-get -y purge sendmail sendmail-bin
+
 apt-get autoclean
 rm -rf /etc/mysql
 
@@ -57,7 +63,7 @@ apt-get -y update
 echo -ne "\nUpgrading Aptitude Apps: ">/dev/tty
 apt-get -y upgrade
 echo -ne "\nBuilding Essentials and Requirements: ">/dev/tty
-apt-get -y install build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev
+apt-get -y install build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev postfix
  
  
  
