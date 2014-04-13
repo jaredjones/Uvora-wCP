@@ -176,7 +176,6 @@ perl -pi -e 's/#LoadModule ssl_module/LoadModule ssl_module/g' httpd.conf
 perl -pi -e 's/#LoadModule autoindex_module/LoadModule autoindex_module/g' httpd.conf
 #perl -pi -e 's/#LoadModule suexec_module/LoadModule suexec_module/g' httpd.conf
 perl -pi -e 's/#LoadModule actions_module/LoadModule actions_module/g' httpd.conf
-perl -pi -e 's{#Include conf/extra/httpd-userdir.conf}{Include conf/extra/httpd-userdir.conf}g' httpd.conf
 perl -pi -e 's{#Include conf/extra/httpd-vhosts.conf}{Include conf/extra/httpd-vhosts.conf}s' httpd.conf
 perl -pi -e 's{#LoadModule cgi_module}{LoadModule cgi_module}g' httpd.conf
 perl -pi -e 's{#AddHandler cgi-script .cgi}{AddHandler cgi-script .cgi .pl}g' httpd.conf
