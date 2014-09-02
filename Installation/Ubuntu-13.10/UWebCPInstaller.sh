@@ -63,7 +63,7 @@ apt-get -y update
 echo -ne "\nUpgrading Aptitude Apps: ">/dev/tty
 apt-get -y upgrade
 echo -ne "\nBuilding Essentials and Requirements: ">/dev/tty
-apt-get -y install build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev postfix mailutils
+apt-get -y sudo install build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev postfix mailutils
  
  
  
@@ -115,10 +115,10 @@ rm -f /etc/rc*/*apachectl
 rm -rf /usr/local/apache2
 rm -rf /var/www
  
-echo -n "Downloading Apache (2.4.9):">/dev/tty
-wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.9.tar.gz
-tar xvf httpd-2.4.9.tar.gz
-cd httpd-2.4.9/
+echo -n "Downloading Apache (2.4.10):">/dev/tty
+wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.10.tar.gz
+tar xvf httpd-2.4.10.tar.gz
+cd httpd-2.4.10/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
 ./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --with-mpm=prefork --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
@@ -220,13 +220,13 @@ cp /usr/lib/libc-client.so.2007e /usr/lib64/
 cd ~/UvoraWCPTMP
 
 echo "">/dev/tty
-echo -n "Downloading/Installing PHP (5.5.11):">/dev/tty
+echo -n "Downloading/Installing PHP (5.6.0):">/dev/tty
 echo -n "This is going to take a LONG LONG time:">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget http://us1.php.net/get/php-5.5.11.tar.gz/from/this/mirror
+wget http://us1.php.net/get/php-5.6.0.tar.gz/from/this/mirror
 tar -xzf mirror
-cd php-5.5.11
+cd php-5.6.0
 ./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
 make -j8
 make install
@@ -240,7 +240,7 @@ cd /usr/local/apache2/conf
 cd ~/
 echo "PHP Installation Finished.">/dev/tty
 echo "">/dev/tty
-echo "Installing MariaDB 10.0 (AKA MySQL 5.6):">/dev/tty
+echo "Installing MariaDB 10.0.X (AKA MySQL 5.6):">/dev/tty
 genpasswd() {
     local l=$1
         [ "$l" == "" ] && l=16
@@ -249,8 +249,8 @@ genpasswd() {
  
 MARIADB_PASS=$(genpasswd 20)
  
-apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-add-apt-repository 'deb http://mirrors.syringanetworks.net/mariadb/repo/10.0/ubuntu saucy main'
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
 apt-get update
 echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
 echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
@@ -286,9 +286,9 @@ cp -fr * /etc/UWebCP/panel
 echo "UWeb files have been fetched.">/dev/tty
 echo "">/dev/tty
 echo "Compiling USudo">/dev/tty
-cc -o /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo.c
-chown root /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
-chmod +s /etc/UWebCP/panel/Installation/Ubuntu-13.10/usudo
+cc -o /etc/UWebCP/panel/Installation/Ubuntu-14.04/usudo /etc/UWebCP/panel/Installation/Ubuntu-14.04/usudo.c
+chown root /etc/UWebCP/panel/Installation/Ubuntu-14.04/usudo
+chmod +s /etc/UWebCP/panel/Installation/Ubuntu-14.04/usudo
 echo "Done.">/dev/tty
 
 #NOTREADY
