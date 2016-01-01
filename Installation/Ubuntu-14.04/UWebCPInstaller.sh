@@ -115,10 +115,10 @@ rm -f /etc/rc*/*apachectl
 rm -rf /usr/local/apache2
 rm -rf /var/www
  
-echo -n "Downloading Apache (2.4.17):">/dev/tty
-wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.17.tar.gz
-tar xvf httpd-2.4.17.tar.gz
-cd httpd-2.4.17/
+echo -n "Downloading Apache (2.4.18):">/dev/tty
+wget http://www.interior-dsgn.com/apache/httpd/httpd-2.4.18.tar.gz
+tar xvf httpd-2.4.18.tar.gz
+cd httpd-2.4.18/
 echo -ne "\nConfiguring Apache (This will take a moment):">/dev/tty
 ./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-so --enable-ssl --enable-cgi --with-mpm=prefork --enable-suexec --with-suexec-docroot=/ --with-suexec-caller=ucp-apache-usr
 echo -ne "\nBuilding Apache (This will take SERVERAL moments):">/dev/tty
@@ -220,13 +220,13 @@ cp /usr/lib/libc-client.so.2007e /usr/lib64/
 cd ~/UvoraWCPTMP
 
 echo "">/dev/tty
-echo -n "Downloading/Installing PHP (5.6.14):">/dev/tty
+echo -n "Downloading/Installing PHP (7.0.1):">/dev/tty
 echo -n "This is going to take a LONG LONG time:">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget http://us1.php.net/get/php-5.6.14.tar.gz/from/this/mirror
+wget http://us1.php.net/get/php-7.0.1.tar.gz/from/this/mirror
 tar -xzf mirror
-cd php-5.6.14
+cd php-7.0.1
 ./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
 make -j8
 make install
@@ -235,7 +235,7 @@ echo "">/dev/tty
 cp php.ini-production /usr/local/apache2/conf/php.ini-production 
 
 cd /usr/local/apache2/conf
-#perl -pi -e 's{LoadModule php5_module}{#LoadModule php5_module}g' httpd.conf
+#perl -pi -e 's{LoadModule php7_module}{#LoadModule php7_module}g' httpd.conf
  
 cd ~/
 echo "PHP Installation Finished.">/dev/tty
