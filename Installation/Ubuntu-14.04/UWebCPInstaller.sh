@@ -63,7 +63,7 @@ apt-get -y update
 echo -ne "\nUpgrading Aptitude Apps: ">/dev/tty
 apt-get -y upgrade
 echo -ne "\nBuilding Essentials and Requirements: ">/dev/tty
-apt-get -y install sudo build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev postfix mailutils libpcre3-dev pkg-config libkrb5-dev libpq-dev
+apt-get -y install sudo build-essential software-properties-common python-apt dialog libreadline-dev libaprutil1 libaprutil1-dev libapr1 libapr1-dev zip unzip git acl libxml2-dev libtool python-software-properties python perl libfcgi-dev libjpeg62-dbg libmcrypt-dev libssl-dev libicu-dev libcurl4-openssl-dev libbz2-dev libjpeg-dev libpng-dev freetype* libc-client-dev libpspell-dev wget curl e2fsprogs apache2-dev postfix mailutils libpcre3-dev pkg-config libkrb5-dev libpq-dev libxslt-dev
  
  
  
@@ -230,7 +230,7 @@ cd PHPFILES
 wget http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
 tar -xzf mirror
 cd php-7.0.2
-./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-xsl --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos=/usr/lib/x86_64-linux-gnu/mit-krb5 --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
+./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-xsl --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
 make -j8
 make install
 echo "">/dev/tty
