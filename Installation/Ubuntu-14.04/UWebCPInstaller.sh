@@ -253,10 +253,10 @@ genpasswd() {
 MARIADB_PASS=$(genpasswd 20)
  
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+sudo add-apt-repository 'deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu wily main'
 apt-get update
-echo mariadb-server-10.0 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
-echo mariadb-server-10.0 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
+echo mariadb-server-10.1 mysql-server/root_password password $MARIADB_PASS | sudo debconf-set-selections
+echo mariadb-server-10.1 mysql-server/root_password_again password $MARIADB_PASS | sudo debconf-set-selections
 apt-get -y install mariadb-server libmariadbclient-dev
 echo "Installation Finished.">/dev/tty 
 echo "">/dev/tty
