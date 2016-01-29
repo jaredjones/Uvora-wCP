@@ -220,14 +220,14 @@ cp /usr/lib/libc-client.so.2007e /usr/lib64/
 cd ~/UvoraWCPTMP
 
 echo "">/dev/tty
-echo -n "Downloading/Installing PHP (7.0.1):">/dev/tty
+echo -n "Downloading/Installing PHP (7.0.2):">/dev/tty
 echo -n "This is going to take a LONG LONG time:">/dev/tty
 mkdir -p PHPFILES
 cd PHPFILES
-wget http://us1.php.net/get/php-7.0.1.tar.gz/from/this/mirror
+wget http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
 tar -xzf mirror
-cd php-7.0.1
-./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
+cd php-7.0.2
+./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3 --with-libdir=/lib/x86_64-linux-gnu
 make -j8
 make install
 echo "">/dev/tty
