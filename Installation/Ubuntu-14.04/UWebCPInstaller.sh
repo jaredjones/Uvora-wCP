@@ -217,6 +217,9 @@ cp /usr/lib/libc-client.a /usr/lib64/
 cp /usr/lib/libc-client.so /usr/lib64/
 cp /usr/lib/libc-client.so.2007e /usr/lib64/
 
+sudo mkdir /usr/kerberos
+sudo ln -s /usr/lib/x86_64-linux-gnu/mit-krb5/* /usr/kerberos
+
 cd ~/UvoraWCPTMP
 
 echo "">/dev/tty
@@ -227,7 +230,7 @@ cd PHPFILES
 wget http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
 tar -xzf mirror
 cd php-7.0.2
-./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
+./configure --prefix=/usr/local/php --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib-dir --with-freetype-dir --enable-cgi --enable-mbstring --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-bz2 --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-pgsql --with-pdo-pgsql --enable-ipv6 --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-libdir=lib64 --with-libxml-dir=/usr --enable-exif --enable-dba --with-gettext --enable-shmop --enable-sysvmsg --enable-wddx --with-imap=/usr/lib --with-imap-ssl --with-kerberos=/usr/lib/x86_64-linux-gnu/mit-krb5 --enable-bcmath --enable-ftp --enable-intl --with-pspell --with-sqlite3
 make -j8
 make install
 echo "">/dev/tty
