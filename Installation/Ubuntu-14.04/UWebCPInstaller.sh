@@ -203,9 +203,9 @@ echo "">/dev/tty
 cd ~/UvoraWCPTMP
 echo "">/dev/tty
 echo -n "Downloading MPM-ITK:">/dev/tty
-wget http://mpm-itk.sesse.net/mpm-itk-2.4.7-03.tar.gz
-tar -xzf mpm-itk-2.4.7-03.tar.gz
-cd mpm-itk-2.4.7-03
+wget http://mpm-itk.sesse.net/mpm-itk-2.4.7-04.tar.gz
+tar -xzf mpm-itk-2.4.7-04.tar.gz
+cd mpm-itk-2.4.7-04
 ./configure --with-apxs=/usr/local/apache2/bin/apxs
 make
 make install
